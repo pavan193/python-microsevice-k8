@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        AWS_REGION = 'us-east-1'
+        ECR_REGISTRY = '488179516441.dkr.ecr.us-east-1.amazonaws.com'
+        ECR_REPO = 'python-microservice'
+    }
+
     stages {
         // stage('Checkout') {
         //     steps {
@@ -16,10 +22,31 @@ pipeline {
                 sh 'docker build -t projectserviceimage ./project-service/'
             }
         }
-        stage('push Docker Image') {
+        stage('Login to ECR') {
             steps {
-                // Push the Docker image to a registry (e.g., ECR, Docker Hub)
-                echo 'Pushing Docker images to registry...'
+                sh '''
+                    aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+                '''
+            }
+        }
+
+        stage('Tag Docker Image') {
+            steps {
+                sh '''
+                    docker tag frontendimage:${BUILD_NUMBER} ${ECR_REGISTRY}/frontendimage:${BUILD_NUMBER}
+                    docker tag employeeserviceimage:${BUILD_NUMBER} ${ECR_REGISTRY}/employeeserviceimage:${BUILD_NUMBER}
+                    docker tag projectserviceimage:${BUILD_NUMBER} ${ECR_REGISTRY}/projectserviceimage:${BUILD_NUMBER}
+                '''
+            }
+        }
+
+        stage('Push to ECR') {
+            steps {
+                sh '''
+                    docker push ${ECR_REGISTRY}/frontendimage:${BUILD_NUMBER}
+                    docker push ${ECR_REGISTRY}/employeeserviceimage:${BUILD_NUMBER}
+                    docker push ${ECR_REGISTRY}/projectserviceimage:${BUILD_NUMBER}
+                '''
             }
         }
     }
