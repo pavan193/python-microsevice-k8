@@ -12,8 +12,8 @@ pipeline {
             steps {
                 // Build the Docker image
                 sh 'docker build -t frontendimage ./frontend/'
-                sh 'docker build -t employeeserviceimage ./employeeservice/'
-                sh 'docker build -t projectserviceimage ./projectservice/'
+                sh 'docker build -t employeeserviceimage ./employee-service/'
+                sh 'docker build -t projectserviceimage ./project-service/'
             }
         }
         stage('push Docker Image') {
