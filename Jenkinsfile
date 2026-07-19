@@ -17,9 +17,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 // Build the Docker image
-                sh 'docker build -t frontendimage:${BUILD_NUMBER} ./frontend/'
-                sh 'docker build -t employeeserviceimage:${BUILD_NUMBER} ./employee-service/'
-                sh 'docker build -t projectserviceimage:${BUILD_NUMBER} ./project-service/'
+                sh 'docker build -t frontendimage ./frontend/'
+                sh 'docker build -t employeeserviceimage ./employee-service/'
+                sh 'docker build -t projectserviceimage ./project-service/'
             }
         }
         stage('Login to ECR') {
@@ -33,9 +33,9 @@ pipeline {
         stage('Tag Docker Image') {
             steps {
                 sh '''
-                    docker tag frontendimage:${BUILD_NUMBER} ${ECR_REGISTRY}/frontendimage:${BUILD_NUMBER}
-                    docker tag employeeserviceimage:${BUILD_NUMBER} ${ECR_REGISTRY}/employeeserviceimage:${BUILD_NUMBER}
-                    docker tag projectserviceimage:${BUILD_NUMBER} ${ECR_REGISTRY}/projectserviceimage:${BUILD_NUMBER}
+                    docker tag frontendimage:latest ${ECR_REGISTRY}/${ECR_REPO}:frontend-${BUILD_NUMBER}
+                    docker tag employeeserviceimage:latest ${ECR_REGISTRY}/${ECR_REPO}:employee-${BUILD_NUMBER}
+                    docker tag projectserviceimage:latest ${ECR_REGISTRY}/${ECR_REPO}:project-${BUILD_NUMBER}
                 '''
             }
         }
@@ -43,9 +43,9 @@ pipeline {
         stage('Push to ECR') {
             steps {
                 sh '''
-                    docker push ${ECR_REGISTRY}/frontendimage:${BUILD_NUMBER}
-                    docker push ${ECR_REGISTRY}/employeeserviceimage:${BUILD_NUMBER}
-                    docker push ${ECR_REGISTRY}/projectserviceimage:${BUILD_NUMBER}
+                    docker push ${ECR_REGISTRY}/${ECR_REPO}:frontend-${BUILD_NUMBER}
+                    docker push ${ECR_REGISTRY}/${ECR_REPO}:employee-${BUILD_NUMBER}
+                    docker push ${ECR_REGISTRY}/${ECR_REPO}:project-${BUILD_NUMBER}
                 '''
             }
         }
