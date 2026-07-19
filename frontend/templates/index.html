@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        DevOps Microservices Platform
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+    <div class="logo">
+
+        🚀 DevOps Platform
+
+    </div>
+
+    <div class="nav-status">
+
+        Microservices Environment
+
+    </div>
+
+</nav>
+
+
+
+<section class="hero">
+
+    <div class="badge">
+
+        ☸ Kubernetes Microservices Project
+
+    </div>
+
+
+    <h1>
+
+        Build. Deploy.
+
+        <span>
+
+            Scale.
+
+        </span>
+
+    </h1>
+
+
+    <p>
+
+        A production-style microservices application
+        built for your DevOps journey.
+
+    </p>
+
+
+    <div class="quote">
+
+        "The best way to learn DevOps
+        is to deploy something real."
+
+    </div>
+
+</section>
+
+
+
+<div class="container">
+
+
+    <h2 class="section-title">
+
+        Microservices Status
+
+    </h2>
+
+
+    <div class="service-grid">
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+
+                🌐
+
+            </div>
+
+            <h3>
+
+                Frontend
+
+            </h3>
+
+            <p>
+
+                Web Application
+
+            </p>
+
+            <span class="up">
+
+                ● UP
+
+            </span>
+
+        </div>
+
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+
+                👨‍💻
+
+            </div>
+
+            <h3>
+
+                Employee Service
+
+            </h3>
+
+            <p>
+
+                REST API :5001
+
+            </p>
+
+
+            {% if employee_service_status == "UP" %}
+
+            <span class="up">
+
+                ● UP
+
+            </span>
+
+            {% else %}
+
+            <span class="down">
+
+                ● DOWN
+
+            </span>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+
+                📦
+
+            </div>
+
+            <h3>
+
+                Project Service
+
+            </h3>
+
+            <p>
+
+                REST API :5002
+
+            </p>
+
+
+            {% if project_service_status == "UP" %}
+
+            <span class="up">
+
+                ● UP
+
+            </span>
+
+            {% else %}
+
+            <span class="down">
+
+                ● DOWN
+
+            </span>
+
+            {% endif %}
+
+        </div>
+
+
+    </div>
+
+
+
+    <section class="panel">
+
+
+        <h2>
+
+            👨‍💻 Engineering Team
+
+        </h2>
+
+
+        <form
+            action="/employees/add"
+            method="POST"
+            class="form"
+        >
+
+            <input
+                name="name"
+                placeholder="Engineer Name"
+                required
+            >
+
+            <input
+                name="email"
+                type="email"
+                placeholder="Email"
+                required
+            >
+
+            <input
+                name="role"
+                placeholder="Role"
+                required
+            >
+
+            <button>
+
+                Add Engineer
+
+            </button>
+
+        </form>
+
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Name
+                    </th>
+
+                    <th>
+                        Email
+                    </th>
+
+                    <th>
+                        Role
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+            {% for employee in employees %}
+
+
+                <tr>
+
+                    <td>
+
+                        {{ employee.id }}
+
+                    </td>
+
+                    <td>
+
+                        {{ employee.name }}
+
+                    </td>
+
+                    <td>
+
+                        {{ employee.email }}
+
+                    </td>
+
+                    <td>
+
+                        {{ employee.role }}
+
+                    </td>
+
+                    <td>
+
+
+                        <form
+                            action="/employees/delete/{{ employee.id }}"
+                            method="POST"
+                        >
+
+                            <button class="delete">
+
+                                Delete
+
+                            </button>
+
+                        </form>
+
+
+                    </td>
+
+                </tr>
+
+
+            {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </section>
+
+
+
+    <section class="panel">
+
+
+        <h2>
+
+            📦 Projects
+
+        </h2>
+
+
+        <form
+            action="/projects/add"
+            method="POST"
+            class="form"
+        >
+
+
+            <input
+                name="name"
+                placeholder="Project Name"
+                required
+            >
+
+
+            <input
+                name="description"
+                placeholder="Description"
+            >
+
+
+            <select name="status">
+
+                <option>
+
+                    Planning
+
+                </option>
+
+                <option>
+
+                    Development
+
+                </option>
+
+                <option>
+
+                    Testing
+
+                </option>
+
+                <option>
+
+                    Production
+
+                </option>
+
+            </select>
+
+
+            <button>
+
+                Add Project
+
+            </button>
+
+
+        </form>
+
+
+
+        <table>
+
+
+            <thead>
+
+
+                <tr>
+
+                    <th>
+
+                        ID
+
+                    </th>
+
+                    <th>
+
+                        Project
+
+                    </th>
+
+                    <th>
+
+                        Description
+
+                    </th>
+
+                    <th>
+
+                        Status
+
+                    </th>
+
+                    <th>
+
+                        Action
+
+                    </th>
+
+                </tr>
+
+
+            </thead>
+
+
+            <tbody>
+
+
+            {% for project in projects %}
+
+
+                <tr>
+
+
+                    <td>
+
+                        {{ project.id }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ project.name }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ project.description }}
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="status">
+
+                            {{ project.status }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+
+                        <form
+                            action="/projects/delete/{{ project.id }}"
+                            method="POST"
+                        >
+
+
+                            <button class="delete">
+
+                                Delete
+
+                            </button>
+
+
+                        </form>
+
+
+                    </td>
+
+
+                </tr>
+
+
+            {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </section>
+
+
+</div>
+
+
+
+<footer>
+
+
+    <p>
+
+        Python • Docker • Jenkins • Kubernetes • PostgreSQL
+
+    </p>
+
+
+    <strong>
+
+        Keep Building. Keep Deploying. Keep Learning. 🚀
+
+    </strong>
+
+
+</footer>
+
+
+</body>
+
+</html>
