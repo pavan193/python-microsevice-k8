@@ -24,9 +24,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 // Build the Docker image
-                sh 'docker build -t frontendimage ./frontend/'
-                sh 'docker build -t employeeserviceimage ./employee-service/'
-                sh 'docker build -t projectserviceimage ./project-service/'
+                sh 'docker build -t frontendimage ./python-microservice/frontend/'
+                sh 'docker build -t employeeserviceimage ./python-microservice/employee-service/'
+                sh 'docker build -t projectserviceimage ./python-microservice/project-service/'
             }
         }
         stage('Login to ECR') {
