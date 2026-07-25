@@ -23,16 +23,14 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh '''
-                echo "Current directory:"
-                pwd
+                sh 'echo Current directory:'
+                sh 'pwd'
 
-                echo "Files:"
-                ls -la
+                sh 'echo Files:'
+                sh 'ls -la'
 
-                echo "Directories:"
-                find . -maxdepth 2 -type d
-                '''
+                sh 'echo Directories:'
+                sh 'find . -maxdepth 2 -type d'
                 // Build the Docker image
                 sh 'docker build -t frontendimage ./python-microservice/frontend/'
                 sh 'docker build -t employeeserviceimage ./python-microservice/employee-service/'
