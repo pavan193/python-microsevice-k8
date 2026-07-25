@@ -8,12 +8,19 @@ pipeline {
     }
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+
         // stage('Checkout') {
         //     steps {
         //         // Checkout the code from the repository
         //         git checkout 'https://github.com/pavan193/python-microsevice-k8.git'
         //     }
         // }
+
         stage('Build Docker Image') {
             steps {
                 // Build the Docker image
@@ -33,9 +40,9 @@ pipeline {
         stage('Tag Docker Image') {
             steps {
                 sh '''
-                    docker tag frontendimage:latest ${ECR_REGISTRY}/${ECR_REPO}:frontend-${BUILD_NUMBER}
-                    docker tag employeeserviceimage:latest ${ECR_REGISTRY}/${ECR_REPO}:employee-${BUILD_NUMBER}
-                    docker tag projectserviceimage:latest ${ECR_REGISTRY}/${ECR_REPO}:project-${BUILD_NUMBER}
+                    docker tag frontendimage:latest ${ECR_REGISTRY}/${ECR_REPO}:frontendapp-latest
+                    docker tag employeeserviceimage:latest ${ECR_REGISTRY}/${ECR_REPO}:employeedb-latest
+                    docker tag projectserviceimage:latest ${ECR_REGISTRY}/${ECR_REPO}:projectdb-latest
                 '''
             }
         }
@@ -43,9 +50,9 @@ pipeline {
         stage('Push to ECR') {
             steps {
                 sh '''
-                    docker push ${ECR_REGISTRY}/${ECR_REPO}:frontend-${BUILD_NUMBER}
-                    docker push ${ECR_REGISTRY}/${ECR_REPO}:employee-${BUILD_NUMBER}
-                    docker push ${ECR_REGISTRY}/${ECR_REPO}:project-${BUILD_NUMBER}
+                    docker push ${ECR_REGISTRY}/${ECR_REPO}:frontendapp-latest
+                    docker push ${ECR_REGISTRY}/${ECR_REPO}:employeedb-latest
+                    docker push ${ECR_REGISTRY}/${ECR_REPO}:projectdb-latest
                 '''
             }
         }

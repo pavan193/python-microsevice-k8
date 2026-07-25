@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+spec:
+  replicas: 2
+  selectors:
+    matchlabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: 488179516441.dkr.ecr.us-east-1.amazonaws.com/python-microservice:frontendapp-latest
+          ports:
+            - containerPort: 80
+      
