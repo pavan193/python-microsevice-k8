@@ -8,9 +8,10 @@ pipeline {
     }
 
     stages {
-        stage('Clean Workspace') {
+        stage('Clean and Checkout') {
             steps {
                 cleanWs()
+                checkout scm
             }
         }
 
@@ -23,18 +24,18 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'echo Current directory:'
-                sh 'pwd'
+                // sh 'echo Current directory:'
+                // sh 'pwd'
 
-                sh 'echo Files:'
-                sh 'ls -la'
+                // sh 'echo Files:'
+                // sh 'ls -la'
 
-                sh 'echo Directories:'
-                sh 'find . -maxdepth 2 -type d'
+                // sh 'echo Directories:'
+                // sh 'find . -maxdepth 2 -type d'
                 // Build the Docker image
-                sh 'docker build -t frontendimage ./python-microservice/frontend/'
-                sh 'docker build -t employeeserviceimage ./python-microservice/employee-service/'
-                sh 'docker build -t projectserviceimage ./python-microservice/project-service/'
+                sh 'docker build -t frontendimage ./frontend/'
+                sh 'docker build -t employeeserviceimage ./employee-service/'
+                sh 'docker build -t projectserviceimage ./project-service/'
             }
         }
         stage('Login to ECR') {
