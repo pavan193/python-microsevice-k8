@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+
+data:
+  EMPLOYEE_SERVICE_URL: "http://employee-service:5001"
+  PROJECT_SERVICE_URL: "http://project-service:5002"
