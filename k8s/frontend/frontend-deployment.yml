@@ -19,5 +19,10 @@ spec:
       containers:
         - name: frontend
           image: 488179516441.dkr.ecr.us-east-1.amazonaws.com/python-microservice:frontendapp-latest
+
           ports:
             - containerPort: 5000
+
+          envFrom:
+            - configMapRef:
+                name: frontend-config
