@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employee-service
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: employee-service
+
+  template:
+    metadata:
+      labels:
+        app: employee-service
+
+    spec:
+      containers:
+        - name: employee-service
+
+          image: 488179516441.dkr.ecr.us-east-1.amazonaws.com/python-microservice:employeedb-latest
+
+          ports:
+            - containerPort: 5001
+
+          envFrom:
+            - configMapRef:
+                name: employee-service-config
+
+            - secretRef:
+                name: employee-db-secret
