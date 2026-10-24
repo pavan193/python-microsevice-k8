@@ -24,7 +24,7 @@ pipeline {
             }
         }
 
-        stage('Push images to ECR') {
+        stage('Push images') {
             steps {
                 sh '''
                     docker tag frontend:practice ${ECR_REGISTRY}/${ECR_REPO}:frontend-practice
@@ -32,6 +32,35 @@ pipeline {
 
                     docker push ${ECR_REGISTRY}/${ECR_REPO}:frontend-practice
                     docker push ${ECR_REGISTRY}/${ECR_REPO}:employee-service-practice
+                '''
+            }
+        }
+
+        stage('Deploy to EC2') {
+            steps {
+                sh '''
+                    docker pull ${ECR_REGISTRY}/${ECR_REPO}:employee-service-practice
+                    docker pull ${ECR_REGISTRY}/${ECR_REPO}:frontend-practice
+
+                    docker rm -f practice-employee-service || true
+                    docker run -d \
+                      --name practice-employee-service \
+                      --network devops-practice-net \
+                      --restart unless-stopped \
+                      --env-file /etc/devops-practice/rds.env \
+                      -e DB_HOST=employee-db-practice.csha86ws6flz.us-east-1.rds.amazonaws.com \
+                      -e DB_PORT=5432 \
+                      -e DB_NAME=employee_db \
+                      ${ECR_REGISTRY}/${ECR_REPO}:employee-service-practice
+
+                    docker rm -f practice-frontend || true
+                    docker run -d \
+                      --name practice-frontend \
+                      --network devops-practice-net \
+                      --restart unless-stopped \
+                      -e EMPLOYEE_SERVICE_URL=http://practice-employee-service:5001 \
+                      -p 8080:5000 \
+                      ${ECR_REGISTRY}/${ECR_REPO}:frontend-practice
                 '''
             }
         }
