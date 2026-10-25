@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: employee-service
 spec:
-  replicas: 2
 
   selector:
     matchLabels:
@@ -21,6 +20,20 @@ spec:
           image: 488179516441.dkr.ecr.us-east-1.amazonaws.com/python-microservice:employee-service-7
           imagePullPolicy: Always
 
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
           ports:
             - containerPort: 5001
 

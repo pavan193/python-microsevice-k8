@@ -4,7 +4,9 @@ kind: Kustomization
 resources:
   - employee-service/configmap.yml
   - employee-service/deployment.yml
+  - employee-service/hpa.yml
   - employee-service/service.yml
   - frontend/configmap.yml
   - frontend/frontend-deployment.yml
+  - frontend/frontend-hpa.yml
   - frontend/frontend-svc.yml
