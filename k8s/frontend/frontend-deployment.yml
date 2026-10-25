@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: 488179516441.dkr.ecr.us-east-1.amazonaws.com/python-microservice:frontend-7
+          image: 488179516441.dkr.ecr.us-east-1.amazonaws.com/python-microservice:frontend-12
           imagePullPolicy: Always
 
           resources:
