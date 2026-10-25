@@ -9,4 +9,5 @@ resources:
   - frontend/configmap.yml
   - frontend/frontend-deployment.yml
   - frontend/frontend-hpa.yml
+  - frontend/ingress.yaml
   - frontend/frontend-svc.yml
