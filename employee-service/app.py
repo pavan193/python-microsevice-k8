@@ -2,10 +2,12 @@ import os
 import time
 
 from flask import Flask, jsonify, request
+from prometheus_flask_exporter import PrometheusMetrics
 import psycopg
 from psycopg.rows import dict_row
 
 app = Flask(__name__)
+PrometheusMetrics(app)
 
 
 DB_HOST = os.getenv("DB_HOST", "localhost")

@@ -11,3 +11,4 @@ resources:
   - frontend/frontend-hpa.yml
   - frontend/ingress.yaml
   - frontend/frontend-svc.yml
+  - employee-service/servicemonitor.yml
