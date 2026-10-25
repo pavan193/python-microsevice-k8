@@ -4,6 +4,6 @@ metadata:
   name: employee-service-config
 
 data:
-  DB_HOST: employee-db
+  DB_HOST: employee-db-practice.csha86ws6flz.us-east-1.rds.amazonaws.com
   DB_PORT: "5432"
   DB_NAME: employee_db

@@ -18,7 +18,8 @@ spec:
       containers:
         - name: employee-service
 
-          image: 488179516441.dkr.ecr.us-east-1.amazonaws.com/python-microservice:employeedb-latest
+          image: 488179516441.dkr.ecr.us-east-1.amazonaws.com/python-microservice:employee-service-practice
+          imagePullPolicy: Always
 
           ports:
             - containerPort: 5001

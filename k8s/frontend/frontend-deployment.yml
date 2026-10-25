@@ -18,7 +18,8 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: 488179516441.dkr.ecr.us-east-1.amazonaws.com/python-microservice:frontendapp-latest
+          image: 488179516441.dkr.ecr.us-east-1.amazonaws.com/python-microservice:frontend-practice
+          imagePullPolicy: Always
 
           ports:
             - containerPort: 5000
